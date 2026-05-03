@@ -38,10 +38,17 @@ export default function VideoCompressorPage() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const ffmpegRef = useRef(new FFmpeg());
+  
+  // FIX 1: Initialize with null to prevent Node.js SSR error on Vercel
+  const ffmpegRef = useRef<any>(null);
 
   // Load FFmpeg Engine
   const loadFFmpeg = async () => {
+    // FIX 1 (cont): Create the FFmpeg instance only when running in the browser
+    if (!ffmpegRef.current) {
+      ffmpegRef.current = new FFmpeg();
+    }
+    
     const ffmpeg = ffmpegRef.current;
     if (ffmpeg.loaded) return true;
     
@@ -71,7 +78,7 @@ export default function VideoCompressorPage() {
     const ffmpeg = ffmpegRef.current;
 
     // Track real progress
-    ffmpeg.on('progress', ({ progress }) => {
+    ffmpeg.on('progress', ({ progress }: any) => {
       setProgress(Math.round(progress * 100));
     });
 
@@ -96,7 +103,9 @@ export default function VideoCompressorPage() {
 
       // Read the compressed file
       const data = await ffmpeg.readFile(outputName);
-      const compressedBlob = new Blob([data as Uint8Array], { type: format === 'MP4' ? 'video/mp4' : 'video/webm' });
+      
+      // FIX 2: Cast data to 'any' to bypass TypeScript SharedArrayBuffer strictness
+      const compressedBlob = new Blob([data as any], { type: format === 'MP4' ? 'video/mp4' : 'video/webm' });
       
       const compSizeMB = compressedBlob.size / (1024 * 1024);
       setCompressedSize(compSizeMB);
@@ -124,7 +133,7 @@ export default function VideoCompressorPage() {
   };
 
   const handleCancel = () => {
-    if (status === 'processing') {
+    if (status === 'processing' && ffmpegRef.current) {
       ffmpegRef.current.terminate();
     }
     setStatus('idle');
