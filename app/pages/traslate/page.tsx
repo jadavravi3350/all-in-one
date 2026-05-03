@@ -165,7 +165,7 @@ export default function RealTimeTranslatorPage() {
       alert("Your browser does not support Speech Recognition. Please use Chrome.");
       return;
     }
-
+ 
     const recognition = new SpeechRecognition();
     recognition.lang = sourceLang;
     recognition.continuous = true;
