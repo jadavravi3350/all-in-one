@@ -17,7 +17,7 @@ import {
   Check,
   X
 } from 'lucide-react';
-import Navbar from '@/app/componets/Navbar';
+import Navbar from '../../componets/Navbar';
 
 type TabType = 'html' | 'css' | 'js';
 type LogEntry = { type: 'info' | 'log' | 'error'; message: string };

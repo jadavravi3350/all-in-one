@@ -13,7 +13,7 @@ import {
   Blocks,
   MoveHorizontal
 } from 'lucide-react';
-import Navbar from '@/app/componets/Navbar';
+import Navbar from '../../componets/Navbar';
 
 type ModeType = 'Lossless' | 'Balanced' | 'Maximum';
 

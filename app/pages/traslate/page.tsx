@@ -14,7 +14,7 @@ import {
   Check,
   MicOff
 } from 'lucide-react';
-import Navbar from '@/app/componets/Navbar';
+import Navbar from '../../componets/Navbar';
 
 // Comprehensive list of global languages
 const LANGUAGES = [

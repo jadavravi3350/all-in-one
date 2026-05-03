@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
-import Navbar from '@/app/componets/Navbar';
+import Navbar from '../../componets/Navbar';
 
 type StatusType = 'idle' | 'loading_engine' | 'processing' | 'success' | 'error';
 type FormatType = 'MP4' | 'WebM';
