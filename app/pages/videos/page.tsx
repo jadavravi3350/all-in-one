@@ -96,7 +96,7 @@ export default function VideoCompressorPage() {
 
       // Read the compressed file
       const data = await ffmpeg.readFile(outputName);
-      const compressedBlob = new Blob([(data as Uint8Array).buffer], { type: format === 'MP4' ? 'video/mp4' : 'video/webm' });
+      const compressedBlob = new Blob([data as Uint8Array], { type: format === 'MP4' ? 'video/mp4' : 'video/webm' });
       
       const compSizeMB = compressedBlob.size / (1024 * 1024);
       setCompressedSize(compSizeMB);
