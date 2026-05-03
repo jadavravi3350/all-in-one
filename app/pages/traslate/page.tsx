@@ -159,7 +159,8 @@ export default function RealTimeTranslatorPage() {
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    // Cast window to 'any' for both properties to fix TypeScript Vercel build error
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert("Your browser does not support Speech Recognition. Please use Chrome.");
       return;
