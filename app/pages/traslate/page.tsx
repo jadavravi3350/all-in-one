@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ChevronDown, 
-  Mic, 
-  FileUp, 
-  Volume2, 
-  Copy, 
-  Share2, 
-  FileCode2, 
-  ShieldCheck, 
+import {
+  ChevronDown,
+  Mic,
+  FileUp,
+  Volume2,
+  Copy,
+  Share2,
+  FileCode2,
+  ShieldCheck,
   Boxes,
   Check,
   MicOff
@@ -122,19 +122,19 @@ export default function RealTimeTranslatorPage() {
     }
 
     setIsTranslating(true);
-    
+
     // Debounce timer to avoid API spam while typing
     const timer = setTimeout(async () => {
       try {
         const sourceShort = LANGUAGES.find(l => l.code === sourceLang)?.short || 'en';
         const targetShort = LANGUAGES.find(l => l.code === targetLang)?.short || 'hi';
-        
+
         // Using MyMemory Free Translation API (Real API)
         const response = await fetch(
           `https://api.mymemory.translated.net/get?q=${encodeURIComponent(inputText)}&langpair=${sourceShort}|${targetShort}`
         );
         const data = await response.json();
-        
+
         if (data && data.responseData && data.responseData.translatedText) {
           setTranslatedText(data.responseData.translatedText);
         } else {
@@ -165,7 +165,6 @@ export default function RealTimeTranslatorPage() {
       alert("Your browser does not support Speech Recognition. Please use Chrome.");
       return;
     }
- 
     const recognition = new SpeechRecognition();
     recognition.lang = sourceLang;
     recognition.continuous = true;
@@ -208,14 +207,14 @@ export default function RealTimeTranslatorPage() {
   // Handle Text-to-Speech using Browser API
   const handleSpeak = () => {
     if (!translatedText || isSpeaking) return;
-    
+
     setIsSpeaking(true);
     const utterance = new SpeechSynthesisUtterance(translatedText);
     utterance.lang = targetLang;
-    
+
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
-    
+
     window.speechSynthesis.speak(utterance);
   };
 
@@ -238,11 +237,11 @@ export default function RealTimeTranslatorPage() {
 
   return (
     <div className="min-h-screen bg-[#fcfcff] font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 pb-12">
-      
-       <Navbar />
+
+      <Navbar />
 
       <main className="container mx-auto px-6 pt-12 max-w-[1200px] space-y-10">
-        
+
         {/* Header Section */}
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-4">
@@ -264,15 +263,15 @@ export default function RealTimeTranslatorPage() {
 
         {/* Translation Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
+
           {/* Source Pane */}
           <div className={`bg-white rounded-[1.5rem] border ${isListening ? 'border-[#3b28cc] shadow-[0_0_15px_rgba(59,40,204,0.1)]' : 'border-slate-200 hover:border-slate-300'} p-6 flex flex-col h-[420px] shadow-sm transition-all duration-300`}>
             <div className="flex items-center justify-between mb-6">
               <span className="text-[11px] font-bold text-slate-500 tracking-wider uppercase">Source Language</span>
-              
+
               {/* Functional Dropdown */}
               <div className="relative group max-w-[180px] w-full">
-                <select 
+                <select
                   value={sourceLang}
                   onChange={(e) => setSourceLang(e.target.value)}
                   className="appearance-none w-full flex items-center gap-2 bg-slate-50 border border-slate-200 pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer focus:outline-none focus:border-[#d2c4f9] truncate"
@@ -284,8 +283,8 @@ export default function RealTimeTranslatorPage() {
                 <ChevronDown size={16} className="text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none group-hover:text-slate-600" />
               </div>
             </div>
-            
-            <textarea 
+
+            <textarea
               value={inputText}
               onChange={(e) => {
                 if (e.target.value.length <= MAX_CHARS) {
@@ -295,26 +294,26 @@ export default function RealTimeTranslatorPage() {
               className="flex-1 w-full resize-none outline-none text-slate-700 text-lg bg-transparent placeholder:text-slate-400"
               placeholder={isListening ? "Listening... Speak now." : "Paste or type your text here..."}
             ></textarea>
-            
+
             <div className="flex items-center justify-between pt-4 border-t border-slate-100">
               <div className="flex items-center gap-4">
-                <button 
+                <button
                   onClick={toggleListening}
                   className={`transition-colors p-2 rounded-lg ${isListening ? 'text-red-500 bg-red-50 animate-pulse' : 'text-slate-500 hover:text-[#3b28cc] hover:bg-indigo-50'}`}
                   title={isListening ? "Stop listening" : "Start speaking"}
                 >
                   {isListening ? <MicOff size={20} /> : <Mic size={20} />}
                 </button>
-                
+
                 {/* Hidden File Input */}
-                <input 
-                  type="file" 
-                  accept=".txt" 
-                  ref={fileInputRef} 
-                  onChange={handleFileUpload} 
-                  className="hidden" 
+                <input
+                  type="file"
+                  accept=".txt"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  className="hidden"
                 />
-                <button 
+                <button
                   onClick={() => fileInputRef.current?.click()}
                   className="text-slate-500 hover:text-[#3b28cc] transition-colors p-2 hover:bg-indigo-50 rounded-lg"
                   title="Upload Text File (.txt)"
@@ -332,13 +331,13 @@ export default function RealTimeTranslatorPage() {
           <div className="bg-[#fcfbfe] rounded-[1.5rem] border border-[#e5e1f9] p-6 flex flex-col h-[420px] shadow-sm relative overflow-hidden group">
             {/* Subtle background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none"></div>
-            
+
             <div className="flex items-center justify-between mb-6 relative z-10">
               <span className="text-[11px] font-bold text-slate-500 tracking-wider uppercase">Target Language</span>
-              
+
               {/* Functional Dropdown */}
               <div className="relative group max-w-[180px] w-full">
-                <select 
+                <select
                   value={targetLang}
                   onChange={(e) => setTargetLang(e.target.value)}
                   className="appearance-none w-full flex items-center gap-2 bg-white border border-[#e5e1f9] pl-4 pr-10 py-2 rounded-lg text-sm font-medium text-slate-700 hover:border-[#d2c4f9] transition-colors shadow-sm cursor-pointer focus:outline-none focus:border-[#3b28cc] truncate"
@@ -350,7 +349,7 @@ export default function RealTimeTranslatorPage() {
                 <ChevronDown size={16} className="text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none group-hover:text-slate-600" />
               </div>
             </div>
-            
+
             <div className="flex-1 w-full relative z-10 overflow-y-auto pr-2">
               {isTranslating ? (
                 <div className="flex items-center gap-2 text-slate-400 text-lg">
@@ -367,10 +366,10 @@ export default function RealTimeTranslatorPage() {
                 </p>
               )}
             </div>
-            
+
             <div className="flex items-center justify-between pt-4 border-t border-[#e5e1f9] relative z-10 mt-auto">
               <div className="flex items-center gap-2">
-                <button 
+                <button
                   onClick={handleSpeak}
                   disabled={!translatedText || isSpeaking}
                   className={`flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-lg transition-all border border-transparent ${!translatedText ? 'text-slate-400 cursor-not-allowed' : isSpeaking ? 'text-[#3b28cc] bg-indigo-50 border-indigo-100' : 'text-slate-600 hover:text-[#3b28cc] hover:bg-white hover:border-slate-200'}`}
@@ -378,7 +377,7 @@ export default function RealTimeTranslatorPage() {
                   <Volume2 size={18} className={isSpeaking ? "animate-pulse" : ""} />
                   {isSpeaking ? 'Speaking...' : 'Speak'}
                 </button>
-                <button 
+                <button
                   onClick={handleCopy}
                   disabled={!translatedText}
                   className={`flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-lg transition-all border border-transparent ${!translatedText ? 'text-slate-400 cursor-not-allowed' : copied ? 'text-green-600 bg-green-50 border-green-100' : 'text-slate-600 hover:text-[#3b28cc] hover:bg-white hover:border-slate-200'}`}
@@ -387,7 +386,7 @@ export default function RealTimeTranslatorPage() {
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
-              <button 
+              <button
                 className="text-slate-500 hover:text-[#3b28cc] transition-colors p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200"
                 onClick={() => {
                   if (navigator.share && translatedText) {
@@ -401,7 +400,7 @@ export default function RealTimeTranslatorPage() {
               </button>
             </div>
           </div>
-          
+
         </div>
 
         {/* Features Row */}
@@ -445,12 +444,12 @@ export default function RealTimeTranslatorPage() {
 
         {/* Banner/Hero Section */}
         <div className="relative rounded-[1.5rem] overflow-hidden h-[240px] bg-slate-900 shadow-lg group">
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-700 group-hover:scale-105"
             style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2000")' }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-          
+
           <div className="absolute bottom-0 left-0 p-8 md:p-10 w-full">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">
               Precision-engineered for clarity.
