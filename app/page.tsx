@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { signIn } from "next-auth/react";
-import Navbar from './componets/Navbar';
+import Navbar from './componets/Navbar'; 
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
