@@ -90,7 +90,9 @@ export default function CodeEditorPage() {
       }
     });
 
-    return () => mqttClient.end();
+   return () => {
+  mqttClient.end();
+};
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, roomId]);
 
