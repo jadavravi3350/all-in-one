@@ -308,11 +308,10 @@ export default function CodeEditorPage() {
                     language={getLanguage(activeTab)}
                     value={codeFiles[activeTab]}
                     onChange={handleCodeChange}
-                    options={{
+                   options={{
                       fontSize: fontSize,
                       minimap: { enabled: false },
                       wordWrap: "on",
-                      autoClosingTags: true,
                       formatOnPaste: true,
                       suggestOnTriggerCharacters: true
                     }}
