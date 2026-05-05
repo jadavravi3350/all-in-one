@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import Editor from '@monaco-editor/react'; // 🔥 असली VS Code इंजन
+import Editor from '@monaco-editor/react';
 import mqtt from 'mqtt';
 import {
   Code2, Users, History, Settings, Bug, Plus, HelpCircle, LogOut,
@@ -90,9 +90,10 @@ export default function CodeEditorPage() {
       }
     });
 
-   return () => {
-  mqttClient.end();
-};
+    // 🔥 TYPESCRIPT FIX: Added curly braces so it returns void instead of MqttClient
+    return () => {
+      mqttClient.end();
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, roomId]);
 
@@ -156,6 +157,24 @@ export default function CodeEditorPage() {
     setTerminalLogs(prev => [...prev, { type: 'info', text: `Saved version of ${activeTab} to History.` }]);
   };
 
+  const handleTerminalSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && terminalInput.trim()) {
+      const input = terminalInput.trim();
+      setTerminalLogs(prev => [...prev, { type: 'cmd', text: input }]);
+      
+      setTimeout(() => {
+        if (input === 'npm run build') {
+          setTerminalLogs(prev => [...prev, { type: 'info', text: 'Building optimized production build...' }, { type: 'info', text: '✓ Compiled successfully in 2.4s' }]);
+        } else if (input === 'clear') {
+          setTerminalLogs([]);
+        } else {
+          setTerminalLogs(prev => [...prev, { type: 'error', text: `Command not found: ${input}` }]);
+        }
+      }, 400);
+      setTerminalInput('');
+    }
+  };
+
   // ------------------------------------------------------------
   // UI RENDERING
   // ------------------------------------------------------------
@@ -185,7 +204,6 @@ export default function CodeEditorPage() {
     );
   }
 
-  // Gets the correct language for Monaco Editor syntax highlighting
   const getLanguage = (fileName: string) => {
     if (fileName.endsWith('.js')) return 'javascript';
     if (fileName.endsWith('.css')) return 'css';
@@ -242,7 +260,6 @@ export default function CodeEditorPage() {
 
       {/* --- MAIN AREA --- */}
       <main className="flex-1 flex flex-col min-w-0 relative">
-        {/* HEADER */}
         <header className="flex justify-between items-center w-full px-6 h-16 bg-[#051424]/80 backdrop-blur-xl border-b border-[#3e4850]/40 sticky top-0 z-40 shrink-0">
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-black text-[#89ceff] tracking-tighter">CodeFlow</h1>
@@ -269,10 +286,9 @@ export default function CodeEditorPage() {
 
         <div className="flex-1 flex flex-col overflow-hidden relative">
           
-          {/* EDITOR VIEW (WITH MONACO EDITOR) */}
+          {/* EDITOR VIEW */}
           {activeView === 'editor' && (
             <>
-              {/* TABS */}
               <div className="flex items-center justify-between px-6 h-10 bg-[#122131] border-b border-[#3e4850]/20 overflow-x-auto shrink-0">
                 <div className="flex items-center gap-2 h-full pt-2">
                   {Object.keys(codeFiles).map((file) => (
@@ -284,7 +300,6 @@ export default function CodeEditorPage() {
                 </div>
               </div>
 
-              {/* MONACO EDITOR AREA */}
               {activeTab && codeFiles[activeTab] !== undefined ? (
                 <div className="flex-1 relative overflow-hidden bg-[#010f1f] pt-2">
                   <Editor
@@ -336,17 +351,15 @@ export default function CodeEditorPage() {
                 </button>
               </div>
               <div className="space-y-4">
-                {/* You */}
                 <div className="bg-[#051424] border border-[#89ceff]/30 rounded-xl p-4 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <img src={session?.user?.image || "https://ui-avatars.com/api/?name=User"} alt="You" className="w-10 h-10 rounded-full border-2 border-[#89ceff]" />
                     <div>
                       <p className="text-sm font-bold text-[#d4e4fa]">{session?.user?.name || "You"} <span className="text-xs bg-[#89ceff]/20 text-[#89ceff] px-2 py-0.5 rounded-full ml-2">You</span></p>
-                      <p className="text-xs text-green-400 mt-1 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Online</p>
+                      <p className="text-xs text-green-400 mt-1 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-green-400 rounded-full inline-block"></span> Online (Real-Time Active)</p>
                     </div>
                   </div>
                 </div>
-                {/* Other Real Users */}
                 {Object.values(onlineUsers).map((user) => (
                   <div key={user.id} className="bg-[#051424] border border-[#3e4850]/40 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -407,6 +420,18 @@ export default function CodeEditorPage() {
                   {log.type === 'error' && <span className="text-[#ffb4ab] mr-2">✖ {log.text}</span>}
                 </div>
               ))}
+              <div className="flex items-center mt-2">
+                <span className="text-[#89ceff] mr-2">$</span>
+                <input 
+                  type="text" 
+                  value={terminalInput}
+                  onChange={(e) => setTerminalInput(e.target.value)}
+                  onKeyDown={handleTerminalSubmit}
+                  className="flex-1 bg-transparent border-none outline-none text-[#d4e4fa] focus:ring-0 p-0 m-0 font-mono text-[13px]"
+                  placeholder="Type 'clear'..."
+                />
+              </div>
+              <div ref={endOfTerminalRef} />
             </div>
           </div>
 
