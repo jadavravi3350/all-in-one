@@ -19,6 +19,7 @@ export default function Navbar() {
           <Link href="/pages/codedinetor" className="hover:text-indigo-600 transition-colors duration-200">Code Runner</Link>
           <Link href="/pages/videos" className="hover:text-indigo-600 transition-colors duration-200">Video</Link>
           <Link href="/pages/traslate" className="hover:text-indigo-600 transition-colors duration-200">Translate</Link>
+          <Link href="/pages/pdf" className="hover:text-indigo-600 transition-colors duration-200">Pdf</Link>
         </div>
       </div>
 

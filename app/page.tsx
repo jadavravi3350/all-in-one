@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { signIn } from "next-auth/react";
-import Navbar from './componets/Navbar'; 
+import Navbar from './componets/Navbar';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,8 +24,7 @@ export default function Home() {
     { id: 1, title: 'Image Optimizer', description: 'Lossless compression for PNG, JPG, and WebP.', link: '/pages/images', category: 'Graphics' },
     { id: 2, title: 'Code Runner', description: 'Supports JS, Python, Rust and Go.', link: '/pages/codedinetor', category: 'Development' },
     { id: 3, title: 'Video Shrink', description: 'Compress MP4/MOV without quality loss.', link: '/pages/videos', category: 'Media' },
-    { id: 4, title: 'Universal Translator', description: 'Real-time local processing for 50+ languages.', link: '/pages/traslate', category: 'AI Tools' },
-    
+    { id: 4, title: 'Universal Translator', description: 'Real-time local processing for 50+ languages.', link: '/pages/traslate', category: 'AI Tools' }
   ];
 
   // Filter tools based on search input
