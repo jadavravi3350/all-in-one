@@ -327,7 +327,7 @@ export default function CodeRunnerPage() {
                   wordWrap: 'on',
                   autoIndent: 'full',
                   formatOnPaste: true,
-                  autoClosingTags: true, 
+                  // autoClosingTags: true, 
                   autoClosingBrackets: 'always'
                 }}
               />

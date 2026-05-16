@@ -148,7 +148,10 @@ export default function PdfOptimizerPage() {
         }
       }
 
-      const compressedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const compressedBlob = new Blob(
+  [pdfBytes as BlobPart],
+  { type: 'application/pdf' }
+);
       const newUrl = URL.createObjectURL(compressedBlob);
 
       clearInterval(progressInterval);
