@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/app/componets/Footer";
 import { useState } from "react";
 
 export default function JsonFormatterPage() {
@@ -227,6 +228,7 @@ export default function JsonFormatterPage() {
           </div>
         </section>
       </main>
+      <Footer/>
     </div>
   );
 }

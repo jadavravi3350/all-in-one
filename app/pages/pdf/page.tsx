@@ -24,6 +24,7 @@ import {
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import Navbar from '../../componets/Navbar';
+import Footer from '@/app/componets/Footer';
 
 type StatusType = 'pending' | 'processing' | 'done' | 'error';
 type QualityType = 'Standard Compression' | 'Maximum Compression';
@@ -588,19 +589,7 @@ export default function PdfOptimizerPage() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t border-slate-200 pt-8 pb-4">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="text-[11px] font-bold text-slate-400 tracking-wide mb-4 md:mb-0 uppercase">
-            © 2024 UtilityHub Inc. All rights reserved.
-          </div>
-          <div className="flex items-center gap-6 text-[11px] font-bold text-slate-400 tracking-widest">
-            <a href="#" className="hover:text-[#ef4444] transition-colors duration-200">PRIVACY</a>
-            <a href="#" className="hover:text-[#ef4444] transition-colors duration-200">TERMS</a>
-            <a href="#" className="hover:text-[#ef4444] transition-colors duration-200">STATUS</a>
-            <a href="#" className="hover:text-[#ef4444] transition-colors duration-200">CONTACT</a>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 }

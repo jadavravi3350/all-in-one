@@ -9,6 +9,7 @@ import {
   Copy, ChevronDown, Zap, Terminal as TerminalIcon, Check, X, Save, RotateCcw, Play,
   LayoutTemplate
 } from 'lucide-react';
+import Footer from '@/app/componets/Footer';
 
 // Web Development Templates
 const initialFiles: Record<string, string> = {
@@ -436,6 +437,7 @@ export default function CodeEditorPage() {
 
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

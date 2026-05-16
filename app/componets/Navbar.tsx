@@ -12,7 +12,11 @@ export default function Navbar() {
     <nav className="container mx-auto px-6 py-6 flex items-center justify-between">
       <div className="flex items-center gap-8">
         <div className="text-xl font-bold tracking-tight cursor-pointer hover:text-indigo-600 transition-colors duration-300">
-          UtilityHub
+          <img 
+                src={"../icon.png"} 
+                alt="Avatar"
+                className=' h-18 rounded-[50%] object-cover'
+              />
         </div>
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
           <Link href="/pages/images" className="hover:text-indigo-600 transition-colors duration-200">Images</Link>

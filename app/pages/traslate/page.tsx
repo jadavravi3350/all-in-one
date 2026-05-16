@@ -16,6 +16,7 @@ import {
   ArrowLeftRight,
 } from 'lucide-react';
 import Navbar from '../../componets/Navbar';
+import Footer from '@/app/componets/Footer';
 
 // FIX 1: Removed unused `MicOff` import
 
@@ -638,19 +639,7 @@ export default function RealTimeTranslatorPage() {
         </div>
       </main>
 
-      <footer className="mt-16 border-t border-slate-100 bg-[#f9fafc]">
-        <div className="container mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center gap-6 text-[11px] font-bold text-slate-400 tracking-widest mb-4 md:mb-0">
-            <a href="#" className="hover:text-[#3b28cc] transition-colors duration-200">PRIVACY</a>
-            <a href="#" className="hover:text-[#3b28cc] transition-colors duration-200">TERMS</a>
-            <a href="#" className="hover:text-[#3b28cc] transition-colors duration-200">STATUS</a>
-            <a href="#" className="hover:text-[#3b28cc] transition-colors duration-200">CONTACT</a>
-          </div>
-          <div className="text-[11px] font-semibold text-slate-400 tracking-wide uppercase">
-            © 2024 UtilityHub Inc. All rights reserved.
-          </div>
-        </div>
-      </footer>
+  <Footer/>
     </div>
   );
 }

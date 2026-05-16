@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/app/componets/Footer";
 import { useMemo, useState } from "react";
 
 export default function QRPulsePage() {
@@ -373,6 +374,8 @@ END:VCARD`;
             </div>
           </div>
         </main>
+
+        <Footer/>
       </div>
     </div>
   );

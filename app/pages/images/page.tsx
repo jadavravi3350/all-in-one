@@ -7,6 +7,7 @@ import {
   RefreshCw, DownloadCloud, Share2
 } from 'lucide-react';
 import Navbar from '../../componets/Navbar';
+import Footer from '@/app/componets/Footer';
 
 type ModeType = 'Lossless' | 'Balanced' | 'Maximum';
 type ImageFormat = 'image/jpeg' | 'image/png' | 'image/webp';
@@ -358,6 +359,8 @@ export default function ImageOptimizerPage() {
           </div>
         </div>
       </main>
+
+      <Footer/>
     </div>
   );
 }

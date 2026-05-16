@@ -10,6 +10,7 @@ import {
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import Navbar from '../../componets/Navbar';
+import Footer from '@/app/componets/Footer';
 
 type StatusType = 'pending' | 'processing' | 'done' | 'error';
 type FormatType = 'MP4' | 'WebM';
@@ -422,6 +423,7 @@ export default function VideoBatchCompressor() {
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }
